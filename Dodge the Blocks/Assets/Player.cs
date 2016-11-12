@@ -34,9 +34,10 @@ public class Player : MonoBehaviour {
         rb.MovePosition(newPosition);
 	}
 
+    // When player hits a block this will access the GameManager script and called the EndGame method
     void OnCollisionEnter2D ()
     {
-
+        FindObjectOfType<GameManager>().EndGame();
     }
 
 }
