@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
     public float speed = 15f;
+    public float sceneWidth = 5f;
 
     // Reference for rigidbody on Player. rb = RigidBody
     private Rigidbody2D rb;
@@ -20,8 +21,22 @@ public class Player : MonoBehaviour {
         // Time.fixedDeltaTime must be called with the float of speed since we are using FixedUpdate
         float x = Input.GetAxis("Horizontal") * Time.fixedDeltaTime * speed;
 
-        // This line will make sure that we can go left and right but not up. We can go either -1 to the left or 1 to thr right and 0 up
+        // New Variable to store information of movement
+        Vector2 newPosition = rb.position + Vector2.right * x;
+
+
+        // Here we are editing just the x value so that we limit our movement thanks to mathf.Clamp.
+        // the scenceWidth can be changed depending on width of game but for now this will limit our movement to how far
+        // we can go left and right ( -5 to 5)
+        newPosition.x = Mathf.Clamp(newPosition.x, -sceneWidth, sceneWidth);
+        
         // Also MovePosition already includes the w a s d keys as well as the arrw keys for movement. 
-        rb.MovePosition( rb.position + Vector2.right * x);
+        rb.MovePosition(newPosition);
 	}
+
+    void OnCollisionEnter2D ()
+    {
+
+    }
+
 }
